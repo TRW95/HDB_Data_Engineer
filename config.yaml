@@ -1,0 +1,46 @@
+collection:
+  id: 189
+  metadata_url: "https://api-production.data.gov.sg/v2/public/api/collections/{collection_id}/metadata"
+  dataset_metadata_url: "https://api-production.data.gov.sg/v2/public/api/datasets/{dataset_id}/metadata"
+  initiate_download_url: "https://api-open.data.gov.sg/v1/public/api/datasets/{dataset_id}/initiate-download"
+  poll_download_url: "https://api-open.data.gov.sg/v1/public/api/datasets/{dataset_id}/poll-download"
+
+pipeline:
+  start_month: "2012-01"
+  end_month: "2017-12"
+  authoritative_month: "2012-01"
+  reference_date: "2027-01-01"
+  lease_years: 99
+  authoritative_columns:
+    - town
+    - flat_type
+    - flat_model
+    - storey_range
+  required_columns:
+    - month
+    - town
+    - flat_type
+    - block
+    - street_name
+    - storey_range
+    - floor_area_sqm
+    - flat_model
+    - lease_commence_date
+    - resale_price
+
+anomaly:
+  method: "grouped_iqr"
+  grouping_columns:
+    - year
+    - town
+    - flat_type
+  iqr_multiplier: 1.5
+  min_group_size: 20
+
+paths:
+  raw: "data/raw"
+  cleaned: "data/cleaned/hdb_resale_cleaned.csv"
+  transformed: "data/transformed/hdb_resale_transformed.csv"
+  quarantined: "data/quarantined/hdb_resale_quarantined.csv"
+  hashed: "data/hashed/hdb_resale_hashed.csv"
+  profiling_report: "reports/data_profiling_report.md"
